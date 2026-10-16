@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#050b17">
+<meta name="description" content="Bala Graphics — create custom banners, posters and print designs from your phone or computer.">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<title>Bala Graphics | Print & AI Design Studio</title>
+<style>
+:root{--red:#ff3434;--bg:#101026;--panel:#1b1b3a;--muted:#c6c8e5;--line:#41416b;--green:#35e0a1;--pink:#ff4fb8;--cyan:#36d9ff;--gold:#ffd166}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at top left,#29205b 0,transparent 42%),radial-gradient(ellipse at top right,#3a1747 0,transparent 35%),var(--bg);color:#f8f8fb;font-family:Inter,Arial,sans-serif}
+header{position:sticky;top:0;z-index:10;background:rgba(18,15,43,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:14px 20px;flex-wrap:wrap}
+.brand{font-weight:900;font-size:22px;letter-spacing:.4px}.brand b{color:var(--red)}
+nav{display:flex;gap:7px;flex-wrap:wrap}nav button{background:transparent;color:#e7e7ec;border:1px solid transparent;border-radius:9px;padding:10px 12px;cursor:pointer;font-weight:700}nav button.active,nav button:hover{background:#292b33;border-color:#444}
+main{max-width:1180px;margin:auto;padding:22px 20px 50px}.page{display:none}.page.active{display:block}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:25px;align-items:center;padding:28px 0 34px}
+.eyebrow{color:#ff7474;font-weight:800;text-transform:uppercase;letter-spacing:2px;font-size:12px}
+h1{font-size:clamp(35px,5vw,60px);line-height:1.04;margin:12px 0}h1 span{background:linear-gradient(90deg,var(--pink),var(--gold),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}h2{margin-top:0}p{line-height:1.6;color:#d0d2da}
+.hero-img{width:100%;height:350px;object-fit:cover;border-radius:20px;border:1px solid #3b3d46}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:0;border-radius:10px;padding:13px 17px;font-weight:800;cursor:pointer;background:linear-gradient(120deg,var(--red),var(--pink));color:white;box-shadow:0 7px 20px #ff343433;transition:transform .18s,filter .18s}.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn.secondary{background:#292c34;border:1px solid #444}.btn.green{background:var(--green);color:#06170c}.btn:disabled{opacity:.55;cursor:wait}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:linear-gradient(145deg,rgba(38,37,77,.96),rgba(25,25,53,.96));border:1px solid var(--line);box-shadow:0 12px 30px #05051455;border-radius:16px;padding:18px;overflow:hidden}
+.service-img{width:100%;height:155px;object-fit:cover;border-radius:11px;margin-bottom:13px}
+.card h3{margin:6px 0}.muted,.hint{color:var(--muted);font-size:14px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:20px 0}
+label{display:block;font-weight:800;font-size:14px;margin:14px 0 7px}
+input,select,textarea{width:100%;background:#0e1015;color:white;border:1px solid #454854;border-radius:9px;padding:12px;font:inherit}
+textarea{min-height:100px;resize:vertical}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.full{grid-column:1/-1}
+.preview{width:100%;max-height:560px;object-fit:contain;background:#0a0b0e;border:1px solid var(--line);border-radius:12px;margin-top:15px}
+.notice{background:#262015;border:1px solid #6b5125;color:#ffe4a6;padding:12px;border-radius:10px;font-size:13px;line-height:1.5}
+.gallery-img{width:100%;height:210px;object-fit:cover;border-radius:11px}
+footer{border-top:1px solid var(--line);padding:25px 20px;text-align:center;color:var(--muted)}
+.status{font-size:13px;margin-top:12px;white-space:pre-wrap}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.hero-img{height:250px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.nav{justify-content:center}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}}
+@media(max-width:480px){.grid,.grid.two{grid-template-columns:1fr}main{padding:16px 13px 35px}nav{justify-content:center}nav button{padding:8px}}
+
+/* BALA GRAPHICS PREMIUM PRINT STUDIO UPDATE */
+:root{--bg:#080d19;--panel:#101a2b;--muted:#9eacc2;--line:#26344b;--red:#8b5cf6;--accent:#22d3ee;--green:#34d399;--text:#edf5ff}
+body{background:radial-gradient(ellipse at 15% 0%,rgba(34,211,238,.12),transparent 38%),radial-gradient(ellipse at 90% 12%,rgba(139,92,246,.14),transparent 35%),#080d19;color:var(--text)}
+header{background:rgba(8,13,25,.92)!important;border-bottom:1px solid #24324a!important;box-shadow:0 8px 30px #0003}
+.brand{letter-spacing:1.5px}.brand b{color:var(--accent)!important}
+nav button{border-radius:10px!important;transition:background .2s,transform .2s}nav button:hover,nav button.active{background:linear-gradient(135deg,#164e63,#312e81)!important;color:#fff!important;border-color:#3b82f6!important}
+main{max-width:1320px!important}
+.page{animation:studioFade .35s ease both}@keyframes studioFade{from{opacity:.6;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.hero{background:linear-gradient(120deg,#101b32 0%,#142a46 52%,#251b4b 100%);border:1px solid #2c4261;border-radius:24px;padding:clamp(22px,4vw,46px);box-shadow:0 20px 55px #0005;overflow:hidden;position:relative}
+.hero:after{content:"FLEX  •  LABELS  •  STICKERS  •  PRINT";position:absolute;right:20px;bottom:12px;font-size:10px;letter-spacing:2px;color:#a5f3fc88;font-weight:900;pointer-events:none}
+h1,h2,h3{letter-spacing:-.025em}h1 span{background:linear-gradient(90deg,#22d3ee,#a78bfa,#f0abfc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{color:#67e8f9!important;letter-spacing:2px;text-transform:uppercase;font-weight:800}
+.card{background:linear-gradient(145deg,#111d30,#0d1525)!important;border:1px solid #263751!important;border-radius:18px!important;box-shadow:0 10px 28px #0002;transition:transform .22s,border-color .22s,box-shadow .22s}
+.card:hover{transform:translateY(-4px);border-color:#3b82f6!important;box-shadow:0 16px 36px #0004}
+.btn{background:linear-gradient(120deg,#0891b2,#6366f1)!important;border:0!important;color:white!important;border-radius:11px!important;font-weight:800!important;box-shadow:0 6px 18px #0891b233}
+.btn.secondary{background:#17243a!important;border:1px solid #344966!important;box-shadow:none}
+.btn.green{background:linear-gradient(120deg,#059669,#0d9488)!important}
+input,select,textarea{background:#0b1322!important;color:#edf5ff!important;border:1px solid #30415b!important;border-radius:10px!important}
+input:focus,select:focus,textarea:focus{outline:2px solid #22d3ee66;border-color:#22d3ee!important}
+footer{background:#080d19;color:#9eacc2;border-color:#26344b!important}
+.print-category-section{margin:34px 0 40px}.print-category-section .section-head{align-items:center}.print-category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.print-category{min-width:0;overflow:hidden;border-radius:17px;background:#101a2b;border:1px solid #293a55;box-shadow:0 10px 28px #0002;transition:transform .2s,border-color .2s}.print-category:hover{transform:translateY(-4px);border-color:#22d3ee}
+.print-category-art{height:150px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:12px}
+.print-category-art:before{content:"";position:absolute;width:190px;height:90px;transform:rotate(-12deg);border:2px solid #ffffff65;background:#ffffff12;box-shadow:0 12px 24px #0003}
+.print-category-art .sample{z-index:1;text-align:center;padding:12px 16px;min-width:65%;font-size:14px;font-weight:1000;letter-spacing:1.2px;color:#fff;text-shadow:0 2px 5px #0008;transform:rotate(-4deg);border:1px solid #ffffff80;box-shadow:0 10px 22px #0004}
+.art-flex{background:linear-gradient(135deg,#0e7490,#4338ca,#db2777)}.art-flex .sample{background:linear-gradient(120deg,#f97316,#db2777)}
+.art-label{background:linear-gradient(135deg,#064e3b,#0f766e,#164e63)}.art-label .sample{background:#fef3c7;color:#172554;text-shadow:none;border-radius:5px}
+.art-sticker{background:linear-gradient(135deg,#4c1d95,#7e22ce,#be185d)}.art-sticker .sample{background:linear-gradient(120deg,#fef08a,#fb7185);color:#581c87;text-shadow:none;border-radius:50%;min-width:0;width:100px;height:100px;display:flex;align-items:center;justify-content:center}
+.art-card{background:linear-gradient(135deg,#0f172a,#334155,#1e3a8a)}.art-card .sample{background:#f8fafc;color:#0f172a;text-shadow:none;transform:rotate(3deg)}
+.art-poster{background:linear-gradient(135deg,#7c2d12,#ea580c,#facc15)}.art-poster .sample{background:#7f1d1d}
+.art-wedding{background:linear-gradient(135deg,#881337,#be123c,#fda4af)}.art-wedding .sample{background:#fff1f2;color:#9f1239;text-shadow:none;font-family:Georgia,serif}
+.art-menu{background:linear-gradient(135deg,#14532d,#15803d,#ca8a04)}.art-menu .sample{background:#fefce8;color:#365314;text-shadow:none}
+.art-board{background:linear-gradient(135deg,#1e1b4b,#4338ca,#06b6d4)}.art-board .sample{background:#0f172a}
+.print-category-content{padding:15px}.print-category-content h3{margin:0 0 6px;font-size:17px}.print-category-content p{margin:0 0 12px;color:#a9b7cc;font-size:13px;line-height:1.5}.print-category-content .btn{width:100%;padding:9px 12px}
+@media(max-width:900px){.print-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.print-category-art{height:135px}}
+@media(max-width:480px){.print-category-grid{grid-template-columns:1fr 1fr;gap:10px}.print-category-art{height:112px}.print-category-content{padding:11px}.print-category-content h3{font-size:14px}.print-category-content p{font-size:12px}.print-category-content .btn{font-size:12px;padding:8px 5px}.hero{padding:20px}}
+
+
+/* Premium dashboard layout inspired by the supplied reference */
+:root{--bg:#050b17;--panel:#0d192c;--line:#1e3551;--muted:#aabbd2;--accent:#16d9ef;--violet:#8b5cf6}
+html,body{min-height:100%;background:#050b17!important}
+body{background:radial-gradient(ellipse at 72% 0%,#102849 0,transparent 38%),#050b17!important;color:#eef6ff}
+.studio-sidebar{position:fixed;z-index:30;inset:0 auto 0 0;width:252px;display:flex;flex-direction:column;padding:16px 10px 12px;background:linear-gradient(180deg,#081426,#071326 75%,#06101d);border-right:1px solid #172a43;overflow-y:auto}
+.brand-lockup{display:flex;align-items:center;gap:10px;padding:0 8px 18px;border-bottom:1px solid #1d304a;margin-bottom:12px;font-size:0}
+.brand-mark{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(140deg,#7c3aed,#06b6d4);font-size:35px;line-height:1;font-weight:1000;color:#fff;box-shadow:0 0 22px #4f46e555}
+.brand-copy{display:flex;flex-direction:column;color:#f8fafc;font-size:21px;line-height:1;font-weight:1000;letter-spacing:1.4px}
+.brand-copy b{color:#20d9ef}.brand-copy small{font-size:9px;color:#4ce5e9;letter-spacing:2.6px;text-align:center;margin-top:5px}
+.studio-sidebar nav{display:flex;flex-direction:column;gap:4px;flex-wrap:nowrap}
+.studio-sidebar nav button{display:flex;align-items:center;gap:12px;text-align:left;width:100%;min-height:43px;padding:10px 12px;border:1px solid transparent;border-radius:10px;color:#d5e1f2;background:transparent;font-size:14px;font-weight:600}
+.studio-sidebar nav button:first-letter{font-size:18px}
+.studio-sidebar nav button span{white-space:normal}
+.studio-sidebar nav button.active,.studio-sidebar nav button:hover{background:linear-gradient(110deg,#075985,#07598599);border-color:#087ea7;color:white;box-shadow:inset 3px 0 #22d3ee}
+.sidebar-help{display:flex;align-items:center;gap:12px;margin-top:auto;padding:15px 12px;border-radius:13px;background:linear-gradient(120deg,#047857,#0369a1);color:#fff}
+.help-icon{font-size:28px}.sidebar-help div{display:flex;flex-direction:column;gap:3px}.sidebar-help small,.sidebar-help span{font-size:11px;color:#d0fdfa}.sidebar-help strong{font-size:18px}
+.studio-topbar{height:76px;position:sticky;top:0;z-index:25;margin-left:252px;padding:12px 20px;display:flex;align-items:center;gap:14px;background:rgba(5,13,28,.95);border-bottom:1px solid #1d304a;backdrop-filter:blur(14px)}
+.topbar-search{height:43px;display:flex;align-items:center;gap:10px;flex:1;min-width:130px;max-width:560px;border:1px solid #294565;background:#10213a;border-radius:24px;padding:0 15px;color:#a8bad2}
+.topbar-search>span{font-size:24px}.topbar-search input{border:0!important;background:transparent!important;outline:none!important;padding:8px 0!important;min-width:0}
+.topbar-contact{display:flex;align-items:center;gap:8px;white-space:nowrap;color:#f0f6ff;text-decoration:none}
+.topbar-contact div{display:flex;flex-direction:column;gap:2px}.topbar-contact small,.top-user small{font-size:11px;color:#b5c6dc}.topbar-contact strong,.top-user strong{font-size:13px}
+.contact-dot{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#064e3b;color:#5fffd0;font-size:18px;border:1px solid #087b65}
+.top-cta{padding:12px 15px!important;white-space:nowrap;background:linear-gradient(110deg,#7c3aed,#4f46e5)!important}
+.custom-cta{background:linear-gradient(110deg,#0891b2,#06b6d4)!important;color:#001b2a!important}
+.top-user{display:flex;align-items:center;gap:8px;background:transparent;border:0;color:white;white-space:nowrap;cursor:pointer}
+.top-user>span{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#075eea;font-size:18px}
+.top-user div{display:flex;flex-direction:column;text-align:left;gap:2px}
+main{max-width:none!important;margin:0 0 0 252px!important;padding:14px 16px 35px!important}
+.page{min-height:calc(100vh - 100px)}
+.dashboard-hero{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:10px;min-height:275px;position:relative;overflow:hidden;padding:24px 30px;border:1px solid #1e4a78;border-radius:19px;background:radial-gradient(ellipse at 85% 45%,#074f86 0,transparent 42%),linear-gradient(110deg,#071d3a,#062a4c 50%,#101d45);box-shadow:0 15px 40px #0005}
+.dashboard-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 9% 80%,#06b6d466 0 2px,transparent 3px),radial-gradient(circle at 15% 22%,#a855f766 0 2px,transparent 3px);background-size:28px 28px;opacity:.6;pointer-events:none}
+.hero-copy{position:relative;z-index:2;min-width:0}.hero-eyebrow{font-size:14px;color:#f6e7a4;margin-bottom:8px}.dashboard-hero h1{font-size:clamp(35px,4vw,61px);line-height:.98;letter-spacing:-2px;margin:8px 0 0;color:white}.dashboard-hero h1 span{background:linear-gradient(90deg,#06d7f5,#168bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-subtitle{font-size:15px;font-weight:900;letter-spacing:6px;text-align:left;margin:6px 0 10px 65px;color:#e4f3ff}.dashboard-hero p{font-size:11px;line-height:1.8;letter-spacing:.5px;color:#e2edff;margin:10px 0 13px}.dashboard-hero .actions{margin-top:10px}.hero-start{background:linear-gradient(100deg,#fb3d95,#7c3aed)!important}
+.hero-product-stage{position:relative;min-height:225px;display:flex;align-items:center;justify-content:center;gap:8px;perspective:800px}
+.mock-print{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:0 15px 22px #0008;border:2px solid #ffffffa8;color:white;text-shadow:0 2px 4px #000b;overflow:hidden}
+.mock-print:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#ffffff40,transparent 42%,#0005);pointer-events:none}
+.mock-print b{position:relative;font-size:clamp(12px,1.4vw,22px);line-height:1.1;letter-spacing:.4px}.mock-print small{position:relative;font-size:7px;letter-spacing:1px;margin-top:7px}
+.mock-flex{width:25%;height:160px;transform:rotate(-4deg);background:linear-gradient(145deg,#f97316,#d946ef 45%,#2563eb)}
+.mock-roll{width:22%;height:194px;transform:rotate(3deg);background:linear-gradient(145deg,#fbbf24,#f97316 50%,#1d4ed8)}
+.mock-card{width:24%;height:125px;transform:rotate(-2deg);background:linear-gradient(135deg,#fff1f2,#fda4af);color:#8b123b;text-shadow:none}
+.mock-menu{width:19%;height:140px;transform:rotate(3deg);background:linear-gradient(140deg,#7f1d1d,#ea580c,#facc15)}
+.mock-poster{width:19%;height:172px;transform:rotate(4deg);background:linear-gradient(140deg,#7e22ce,#be123c,#f59e0b)}
+.hero-orbit{position:absolute;inset:8% 5%;border:1px dashed #22d3ee4a;border-radius:50%;pointer-events:none}
+.category-ribbon{display:grid;grid-template-columns:repeat(12,minmax(78px,1fr));gap:8px;overflow-x:auto;margin:11px 0 12px;padding:10px;background:#081629;border:1px solid #1d304a;border-radius:15px}
+.category-tile{min-width:76px;display:flex;flex-direction:column;gap:6px;align-items:center;border:0;background:transparent;color:#e5efff;padding:0 1px;cursor:pointer;font-size:10px;white-space:normal}
+.category-tile:hover{color:#22d3ee;transform:translateY(-2px)}
+.category-art{width:100%;height:68px;display:grid;place-items:center;text-align:center;border:1px solid #ffffff44;border-radius:9px;color:#fff;text-shadow:0 2px 5px #000a;font-weight:1000;font-size:11px;line-height:1.1;box-shadow:0 5px 12px #0005;overflow:hidden}
+.cat-flex{background:linear-gradient(140deg,#0284c7,#7c3aed,#ec4899)}.cat-roll{background:linear-gradient(140deg,#f97316,#fbbf24,#1d4ed8)}.cat-business{background:linear-gradient(140deg,#0f172a,#64748b,#dbeafe);color:#102038;text-shadow:none}.cat-sticker{border-radius:50%;background:linear-gradient(140deg,#fef08a,#fb7185,#c084fc);color:#581c87;text-shadow:none}.cat-wedding{background:linear-gradient(140deg,#fff1f2,#fda4af,#9f1239);color:#881337;text-shadow:none;font-family:Georgia,serif}.cat-poster{background:linear-gradient(140deg,#7c3aed,#db2777,#f59e0b)}.cat-menu{background:linear-gradient(140deg,#14532d,#f59e0b,#991b1b)}.cat-social{background:linear-gradient(140deg,#4f46e5,#ec4899,#0ea5e9)}.cat-cert{background:linear-gradient(140deg,#fef3c7,#d6b66b,#fff7ed);color:#713f12;text-shadow:none}.cat-id{background:linear-gradient(140deg,#0f766e,#2563eb,#dbeafe)}.cat-letter{background:linear-gradient(140deg,#f8fafc,#cbd5e1,#64748b);color:#1e293b;text-shadow:none}.cat-bill{background:linear-gradient(140deg,#fee2e2,#fca5a5,#fff1f2);color:#991b1b;text-shadow:none}
+.dashboard-panels{display:grid;grid-template-columns:1.1fr 1fr 1.2fr;gap:11px;margin:0 0 12px}
+.feature-panel{min-width:0;padding:15px;border:1px solid #1d3552;border-radius:16px;background:linear-gradient(145deg,#0d1a2e,#0a1526);box-shadow:0 10px 25px #0002}
+.ai-panel{background:linear-gradient(135deg,#20105c,#101a36 75%)}.custom-panel{background:linear-gradient(135deg,#053d4b,#071c2d)}.templates-panel{background:linear-gradient(135deg,#11233c,#0a1526)}
+.panel-heading{display:flex;align-items:center;gap:10px;margin-bottom:12px}.panel-icon{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border-radius:12px;background:#312e81;color:#c4b5fd;font-size:25px}.custom-panel .panel-icon{background:#064e4a;color:#5eead4}.templates-panel .panel-icon{background:#172554;color:#67e8f9}
+.panel-heading h2{font-size:18px;margin:0 0 4px}.custom-panel .panel-heading h2{color:#22d3ee}.panel-heading p{font-size:12px;margin:0;line-height:1.35;color:#c5d2e5}
+.ai-panel input{height:43px;margin-bottom:10px}.panel-action{width:100%;padding:11px 12px!important}.unit-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:14px 0 10px}.unit-chips span{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 4px;border:1px solid #5b7796;border-radius:9px;background:#29435d;color:#fff;font-size:13px;font-weight:800}.unit-chips small{font-size:9px;font-weight:500;color:#c5d7eb;margin-top:3px}
+.template-mini-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.template-mini-grid button{min-width:0;display:flex;flex-direction:column;gap:4px;background:transparent;color:#e5efff;border:0;font-size:10px;cursor:pointer;padding:0}.mini-art{width:100%;height:70px;border:1px solid #ffffff55;border-radius:7px;display:grid;place-items:center;text-align:center;font-size:10px;font-weight:1000;line-height:1.1;text-shadow:0 2px 5px #000a;box-shadow:0 4px 8px #0005}.mini-shop{background:linear-gradient(145deg,#22c55e,#facc15,#ef4444)}.mini-offer{background:linear-gradient(145deg,#f97316,#dc2626,#facc15)}.mini-bday{background:linear-gradient(145deg,#ec4899,#8b5cf6,#06b6d4)}.mini-fest{background:linear-gradient(145deg,#7c3aed,#db2777,#f59e0b)}
+.dashboard-metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:0 0 11px}.dashboard-metrics article{display:flex;align-items:center;gap:10px;min-width:0;padding:12px;border:1px solid #1d3552;border-radius:13px;background:linear-gradient(145deg,#101e32,#0a1525)}.metric-icon{width:39px;height:39px;flex:0 0 39px;display:grid;place-items:center;border-radius:11px;font-size:21px}.metric-icon.cyan{background:#064e5b;color:#67e8f9}.metric-icon.orange{background:#663b16;color:#fbbf24}.metric-icon.green{background:#065f46;color:#6ee7b7}.metric-icon.blue{background:#123b77;color:#7dd3fc}.metric-icon.emerald{background:#064e3b;color:#6ee7b7}.dashboard-metrics article div{display:flex;flex-direction:column;min-width:0;gap:3px}.dashboard-metrics small{font-size:10px;color:#bdcce0}.dashboard-metrics strong{font-size:13px;line-height:1.2}.dashboard-metrics button{background:none;border:0;padding:0;text-align:left;color:#22d3ee;font-size:10px;cursor:pointer}
+.dashboard-bottom{display:grid;grid-template-columns:1.5fr 1fr;gap:11px}.recent-panel .section-head{margin:0 0 10px;align-items:center}.recent-panel h2,.quick-panel h2{font-size:17px;margin:0 0 5px}.recent-panel .section-head p{font-size:12px;margin:0}.recent-placeholder{display:flex;gap:12px;align-items:center;border:1px solid #203754;background:#0a1424;border-radius:10px;padding:15px}.recent-placeholder>span{font-size:28px;color:#22d3ee}.recent-placeholder strong{font-size:13px}.recent-placeholder p{font-size:12px;margin:5px 0 0}.quick-actions{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-top:12px}.quick-actions button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-width:0;min-height:78px;padding:7px 3px;border:1px solid #35466a;border-radius:10px;background:#14223b;color:#eaf4ff;font-size:10px;cursor:pointer}.quick-actions button:nth-child(odd){border-color:#6d28d9;background:#24174b}.quick-actions button span{font-size:22px;color:#22d3ee}.quick-actions button:hover{border-color:#22d3ee}
+#home>.section-head{margin-top:26px}
+@media(max-width:1250px){.topbar-contact{display:none}.dashboard-panels{grid-template-columns:1fr 1fr}.templates-panel{grid-column:1/-1}.dashboard-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.category-ribbon{grid-template-columns:repeat(12,80px)}}
+@media(max-width:900px){.studio-sidebar{width:76px;padding:12px 7px}.brand-lockup{justify-content:center;padding:0 0 14px}.brand-copy,.studio-sidebar nav button span,.sidebar-help div{display:none}.brand-mark{width:45px;height:45px}.studio-sidebar nav button{justify-content:center;padding:10px 4px;font-size:20px}.sidebar-help{justify-content:center;padding:12px 4px}.help-icon{font-size:22px}.studio-topbar{margin-left:76px;padding:10px;gap:8px}.studio-topbar .topbar-contact,.studio-topbar .custom-cta,.top-user div{display:none}main{margin-left:76px!important;padding:12px!important}.dashboard-hero{grid-template-columns:1fr;min-height:0}.hero-product-stage{min-height:190px}.hero-copy h1{font-size:44px}.dashboard-panels{grid-template-columns:1fr 1fr}.templates-panel{grid-column:1/-1}.dashboard-bottom{grid-template-columns:1fr}.quick-actions{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:560px){.studio-sidebar{width:58px;padding:9px 4px}.brand-mark{width:40px;height:40px;font-size:29px}.studio-sidebar nav button{min-height:41px;font-size:17px}.sidebar-help{padding:8px 2px}.studio-topbar{margin-left:58px;height:auto;min-height:65px;flex-wrap:wrap}.topbar-search{flex-basis:100%;max-width:none;height:36px}.studio-topbar .top-cta{font-size:11px!important;padding:9px!important;flex:1}.top-user{display:none}main{margin-left:58px!important;padding:8px!important}.dashboard-hero{padding:18px 14px}.dashboard-hero h1{font-size:34px;letter-spacing:-1px}.hero-subtitle{margin-left:25px;font-size:12px;letter-spacing:4px}.dashboard-hero p{font-size:9px}.hero-product-stage{min-height:145px;gap:4px}.mock-flex{height:100px}.mock-roll{height:126px}.mock-card{height:80px}.mock-menu{height:100px}.mock-poster{height:116px}.mock-print small{display:none}.mock-print b{font-size:10px}.category-ribbon{grid-template-columns:repeat(12,72px);padding:8px}.category-art{height:57px}.dashboard-panels{grid-template-columns:1fr}.templates-panel{grid-column:auto}.dashboard-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-metrics article{padding:9px}.dashboard-metrics article:last-child{grid-column:1/-1}.dashboard-bottom{grid-template-columns:1fr}.quick-actions{grid-template-columns:repeat(3,minmax(0,1fr))}.template-mini-grid{gap:5px}.mini-art{height:58px}}
+
+
+/* Real product photography layer for the print studio dashboard */
+.category-art,.mini-art,.mock-print{background-size:cover;background-position:center;background-repeat:no-repeat;position:relative;isolation:isolate}
+.category-art:after,.mini-art:after,.mock-print:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#06122510,#061225a8);z-index:0;pointer-events:none}
+.category-art,.mini-art{ text-shadow:0 2px 6px #000; }
+.category-art>* ,.mini-art>*{position:relative;z-index:1}
+.cat-flex{background-image:linear-gradient(135deg,#07598555,#7c3aed66),url('https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=500&q=80')}
+.cat-roll{background-image:linear-gradient(135deg,#f9731655,#1d4ed866),url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=500&q=80')}
+.cat-business{background-image:linear-gradient(135deg,#0f172a44,#64748b66),url('https://images.unsplash.com/photo-1589330694653-ded6df03f754?auto=format&fit=crop&w=500&q=80')}
+.cat-sticker{background-image:linear-gradient(135deg,#fef08a33,#c084fc66),url('https://images.unsplash.com/photo-1634942536790-253e4ccc4e2e?auto=format&fit=crop&w=500&q=80')}
+.cat-wedding{background-image:linear-gradient(135deg,#fff1f244,#9f123966),url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80')}
+.cat-poster{background-image:linear-gradient(135deg,#7c3aed44,#db277766),url('https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=500&q=80')}
+.cat-menu{background-image:linear-gradient(135deg,#14532d44,#991b1b77),url('https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&w=500&q=80')}
+.cat-social{background-image:linear-gradient(135deg,#4f46e544,#ec489977),url('https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=500&q=80')}
+.cat-cert{background-image:linear-gradient(135deg,#fef3c744,#d6b66b66),url('https://images.unsplash.com/photo-1455390582262-044ciede?auto=format&fit=crop&w=500&q=80')}
+.cat-id{background-image:linear-gradient(135deg,#0f766e44,#2563eb66),url('https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=500&q=80')}
+.cat-letter{background-image:linear-gradient(135deg,#f8fafc44,#64748b66),url('https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=500&q=80')}
+.cat-bill{background-image:linear-gradient(135deg,#fee2e244,#fca5a566),url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=500&q=80')}
+.mini-shop{background-image:linear-gradient(135deg,#22c55e44,#ef444466),url('https://images.unsplash.com/photo-1557682250-33bd709cbe85?auto=format&fit=crop&w=400&q=80')}
+.mini-offer{background-image:linear-gradient(135deg,#f9731644,#dc262666),url('https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=400&q=80')}
+.mini-bday{background-image:linear-gradient(135deg,#ec489944,#06b6d466),url('https://images.unsplash.com/photo-1530103862676-de8c9deader?auto=format&fit=crop&w=400&q=80')}
+.mini-fest{background-image:linear-gradient(135deg,#7c3aed44,#f59e0b66),url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=400&q=80')}
+.mock-flex{background-image:linear-gradient(145deg,#f9731644,#2563eb66),url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=500&q=80')}
+.mock-roll{background-image:linear-gradient(145deg,#fbbf2444,#1d4ed866),url('https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=500&q=80')}
+.mock-card{background-image:linear-gradient(135deg,#fff1f244,#fda4af66),url('https://images.unsplash.com/photo-1589330694653-ded6df03f754?auto=format&fit=crop&w=500&q=80')}
+.mock-menu{background-image:linear-gradient(140deg,#7f1d1d44,#facc1566),url('https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&w=500&q=80')}
+.mock-poster{background-image:linear-gradient(140deg,#7e22ce44,#f59e0b66),url('https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=500&q=80')}
+
+</style>
+</head>
+<body>
+<aside class="studio-sidebar">
+  <div class="brand brand-lockup"><span class="brand-mark">B</span><span class="brand-copy">BALA <b>GRAPHICS</b><small>OFFICE APP</small></span></div>
+  <nav aria-label="Main navigation">
+   <button class="active" data-page="home">⌂ <span>Dashboard</span></button>
+   <button data-page="studio">✦ <span>AI Design Studio</span></button>
+   <button data-page="services">▦ <span>Design Templates</span></button>
+   <button data-page="custom">✎ <span>Custom Design Maker</span></button>
+   <button data-page="gallery">▧ <span>Design Gallery</span></button>
+   <button data-page="services">▱ <span>Categories</span></button>
+   <button data-page="order">🛒 <span>Customer Orders</span></button>
+   <button data-page="office">▤ <span>Office Manager</span></button>
+   <button data-page="office">₹ <span>Payments</span></button>
+   <button data-page="office">▧ <span>Invoices</span></button>
+   <button data-page="office">♙ <span>Customers</span></button>
+   <button data-page="gallery">▱ <span>Templates Library</span></button>
+   <button data-page="helper">⚙ <span>Business Tools</span></button>
+   <button data-page="contact">⚙ <span>Settings / Contact</span></button>
+  </nav>
+  <div class="sidebar-help"><span class="help-icon">☏</span><div><small>Need Help?</small><strong>9944307171</strong><span>Call or WhatsApp</span></div></div>
+</aside>
+<header class="studio-topbar">
+ <div class="topbar-search"><span>⌕</span><input id="globalSearch" type="search" placeholder="Search designs, templates, orders..." aria-label="Search designs, templates, orders"></div>
+ <div class="topbar-contact"><span class="contact-dot">☎</span><div><small>Call</small><strong>9944307171</strong></div></div>
+ <a class="topbar-contact whatsapp-link" href="https://wa.me/919944307171" target="_blank" rel="noopener"><span class="contact-dot">◉</span><div><small>WhatsApp</small><strong>9944307171</strong></div></a>
+ <button class="btn top-cta" data-go="studio">✦ New Design (AI)</button>
+ <button class="btn top-cta custom-cta" data-go="custom">⚒ Custom Design</button>
+ <button class="top-user" type="button" title="Welcome"> <span>R</span><div><small>Welcome</small><strong>Ramesh</strong></div>⌄</button>
+</header>
+
+<main>
+<section id="home" class="page active">
+ <div class="dashboard-hero">
+  <div class="hero-copy">
+   <div class="hero-eyebrow">♛ &nbsp; Professional Design &amp; Printing Solutions</div>
+   <h1>BALA <span>GRAPHICS</span></h1>
+   <div class="hero-subtitle">OFFICE APP</div>
+   <p>FLEX &nbsp; | &nbsp; BANNERS &nbsp; | &nbsp; LABELS &nbsp; | &nbsp; STICKERS &nbsp; | &nbsp; VISITING CARDS<br>POSTERS &nbsp; | &nbsp; LED BOARD DESIGNS &nbsp; | &nbsp; SOCIAL MEDIA DESIGNS</p>
+   <div class="actions"><button class="btn hero-start" data-go="studio">Start Designing Now&nbsp; →</button><button class="btn secondary" data-go="gallery">Explore Templates</button></div>
+  </div>
+  <div class="hero-product-stage" aria-label="Print product design previews">
+   <div class="mock-print mock-flex"><b>FLEX<br>DESIGN</b><small>HIGH QUALITY PRINT</small></div>
+   <div class="mock-print mock-roll"><b>ROLL UP<br>BANNER</b><small>BRAND YOUR BUSINESS</small></div>
+   <div class="mock-print mock-card"><b>Business<br>Invitation</b><small>DESIGNED WITH CARE</small></div>
+   <div class="mock-print mock-menu"><b>FOOD<br>MENU</b><small>FRESH • TASTY • LOCAL</small></div>
+   <div class="mock-print mock-poster"><b>FESTIVAL<br>POSTER</b><small>CELEBRATE TOGETHER</small></div>
+   <div class="hero-orbit"></div>
+  </div>
+ </div>
+ <div class="category-ribbon" aria-label="Print design categories">
+  <button class="category-tile" data-service="Flex Banner"><span class="category-art cat-flex">FLEX<br>BANNER</span><b>Flex Banners</b></button>
+  <button class="category-tile" data-service="Roll Up Standee"><span class="category-art cat-roll">ROLL UP<br>STANDEE</span><b>Roll Up Standee</b></button>
+  <button class="category-tile" data-service="Visiting Cards"><span class="category-art cat-business">BUSINESS<br>CARD</span><b>Visiting Cards</b></button>
+  <button class="category-tile" data-service="Stickers & Labels"><span class="category-art cat-sticker">STICKER</span><b>Stickers &amp; Labels</b></button>
+  <button class="category-tile" data-service="Wedding Invitation"><span class="category-art cat-wedding">Wedding<br>Invitation</span><b>Wedding Invitations</b></button>
+  <button class="category-tile" data-service="Poster"><span class="category-art cat-poster">EVENT<br>POSTER</span><b>Posters</b></button>
+  <button class="category-tile" data-service="Menu Cards"><span class="category-art cat-menu">FOOD<br>MENU</span><b>Menu Cards</b></button>
+  <button class="category-tile" data-service="Social Media Design"><span class="category-art cat-social">SOCIAL<br>MEDIA</span><b>Social Media</b></button>
+  <button class="category-tile" data-service="Certificates"><span class="category-art cat-cert">CERTIFICATE</span><b>Certificates</b></button>
+  <button class="category-tile" data-service="ID Cards"><span class="category-art cat-id">ID CARD</span><b>ID Cards</b></button>
+  <button class="category-tile" data-service="Letterheads"><span class="category-art cat-letter">LETTER<br>HEAD</span><b>Letterheads</b></button>
+  <button class="category-tile" data-service="Bill Books"><span class="category-art cat-bill">BILL BOOK</span><b>Bill Books</b></button>
+ </div>
+ <div class="dashboard-panels">
+  <article class="feature-panel ai-panel"><div class="panel-heading"><span class="panel-icon">✦</span><div><h2>AI Design Studio</h2><p>Create new designs with AI using your ideas</p></div></div><input id="dashboardPrompt" type="text" placeholder="Example: Create a shop flex design for my store..."><button class="btn panel-action" id="dashboardGenerate">▧ Generate Design</button></article>
+  <article class="feature-panel custom-panel"><div class="panel-heading"><span class="panel-icon">▧</span><div><h2>Custom Design Maker</h2><p>Create designs with custom size (CM, INCH, FEET)</p></div></div><div class="unit-chips"><span>CM<small>Centimetres</small></span><span>INCH<small>Inches</small></span><span>FEET<small>Feet</small></span></div><button class="btn panel-action" data-go="custom">Open Design Maker →</button></article>
+  <article class="feature-panel templates-panel"><div class="panel-heading"><span class="panel-icon">▱</span><div><h2>Ready Templates</h2><p>Use professional ready-made templates</p></div></div><div class="template-mini-grid"><button data-go="gallery"><span class="mini-art mini-shop">SHOP<br>FLEX</span><b>Shop Flex</b></button><button data-go="gallery"><span class="mini-art mini-offer">OFFER<br>SALE</span><b>Offers Banner</b></button><button data-go="gallery"><span class="mini-art mini-bday">BIRTHDAY</span><b>Birthday Poster</b></button><button data-go="gallery"><span class="mini-art mini-fest">FESTIVAL</span><b>Festival Design</b></button></div></article>
+ </div>
+ <div class="dashboard-metrics">
+  <article><span class="metric-icon cyan">🛒</span><div><small>Customer Orders</small><strong>Manage orders</strong><button data-go="order">View Orders →</button></div></article>
+  <article><span class="metric-icon orange">◷</span><div><small>Pending work</small><strong>Track progress</strong><button data-go="office">Open Office →</button></div></article>
+  <article><span class="metric-icon green">✓</span><div><small>Payments &amp; invoices</small><strong>Office records</strong><button data-go="office">Manage records →</button></div></article>
+  <article><span class="metric-icon blue">♙</span><div><small>Customer details</small><strong>Order contacts</strong><button data-go="office">Open Manager →</button></div></article>
+  <article><span class="metric-icon emerald">₹</span><div><small>Print business</small><strong>Ready to create</strong><button data-go="services">Browse services →</button></div></article>
+ </div>
+ <div class="dashboard-bottom"><article class="feature-panel recent-panel"><div class="section-head"><div><h2>Recent Orders</h2><p class="muted">Open your office manager to view saved customer orders.</p></div><button class="btn secondary" data-go="office">View All Orders →</button></div><div class="recent-placeholder"><span>▤</span><div><strong>Your customer orders stay in Office Manager</strong><p>Use the existing order manager to review orders, update statuses, record payments and print invoices.</p></div></div></article><article class="feature-panel quick-panel"><h2>Quick Actions</h2><div class="quick-actions"><button data-go="order"><span>🛒</span>New Order</button><button data-go="office"><span>▤</span>Create Invoice</button><button data-go="office"><span>♙</span>Add Customer</button><button data-go="office"><span>₹</span>Payment Entry</button><button data-go="gallery"><span>▧</span>View Gallery</button></div></article></div>
+ <div class="section-head"><div><div class="eyebrow">What we do</div><h2>Printing made personal</h2></div><button class="btn secondary" data-go="services">All services →</button></div>
+ <div class="grid">
+  <article class="card"><img class="service-img" src="https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=900&q=85" alt="Colorful banner design"><h3>Flex Banners</h3><p class="muted">Events, promotions and celebrations.</p></article>
+  <article class="card"><img class="service-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=85" alt="Celebration"><h3>Birthday & Wedding</h3><p class="muted">Personalized designs for special days.</p></article>
+  <article class="card"><img class="service-img" src="https://images.unsplash.com/photo-1634942536790-253e4ccc4e2e?auto=format&fit=crop&w=900&q=85" alt="Printed design materials"><h3>Stickers & Labels</h3><p class="muted">Custom labels and branding materials.</p></article>
+ </div>
+</section>
+
+<section id="services" class="page">
+ <div class="eyebrow">Our services</div><h1>What do you want <span>to print?</span></h1>
+ <p>Choose a service and continue to the order page. Final price and print specifications are confirmed by the shop.</p>
+ <div class="grid">
+  <article class="card"><img class="service-img" src="https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=900&q=85" alt="Banner artwork"><h3>Flex Banners</h3><button class="btn" data-service="Flex Banner">Order this</button></article>
+  <article class="card"><img class="service-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=85" alt="Party decoration"><h3>Birthday & Wedding Banners</h3><button class="btn" data-service="Birthday / Wedding Banner">Order this</button></article>
+  <article class="card"><img class="service-img" src="https://images.unsplash.com/photo-1634942536790-253e4ccc4e2e?auto=format&fit=crop&w=900&q=85" alt="Printed material"><h3>Stickers & Labels</h3><button class="btn" data-service="Stickers & Labels">Order this</button></article>
+  <article class="card"><img class="service-img" src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=900&q=85" alt="Brand identity"><h3>Shop Boards & Branding</h3><button class="btn" data-service="Shop Board">Order this</button></article>
+  <article class="card"><img class="service-img" src="https://images.unsplash.com/photo-1589330694653-ded6df03f754?auto=format&fit=crop&w=900&q=85" alt="Stationery"><h3>Visiting Cards</h3><button class="btn" data-service="Visiting Cards">Order this</button></article>
+  <article class="card"><img class="service-img" src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=900&q=85" alt="Creative design"><h3>Custom Graphic Design</h3><button class="btn" data-go="studio">Create with AI</button></article>
+ </div>
+</section>
+
+<section id="studio" class="page">
+ <div class="eyebrow">AI-powered creativity</div><h1>AI Design <span>Studio ✨</span></h1>
+ <p>Describe your idea, choose a style and generate an original design concept. You can then use it as a starting point for your print order.</p>
+ <div class="grid two">
+  <div class="card">
+   <form id="aiForm">
+    <label for="designType">Design type</label>
+    <select id="designType"><option>Flex banner</option><option>Birthday banner</option><option>Wedding banner</option><option>Shop board</option><option>Sticker / label</option><option>Visiting card</option><option>YouTube thumbnail</option><option>Festival poster</option><option>Logo concept</option></select>
+    <label for="aiPrompt">Describe your design *</label>
+    <textarea id="aiPrompt" required maxlength="1500" placeholder="Example: A stylish Tamil birthday banner with blue and gold colors, balloons, and a joyful celebration theme."></textarea>
+    <label for="exactText">Exact words to show in the design</label>
+    <input id="exactText" maxlength="250" placeholder="Enter name, shop name or Tamil text">
+    <label for="aiStyle">Visual style</label>
+    <select id="aiStyle"><option>Modern and bold</option><option>Luxury gold</option><option>Red and black cinematic</option><option>Bright and colorful</option><option>Traditional Tamil</option><option>Minimal and clean</option><option>Photorealistic</option></select>
+    <label for="aiSize">Image orientation</label>
+    <select id="aiSize"><option value="1536x1024">Landscape banner</option><option value="1024x1024">Square design</option><option value="1024x1536">Portrait poster</option></select>
+    <button class="btn" id="generateBtn" type="submit">Generate AI Design</button>
+    <div id="aiStatus" class="status" role="status"></div>
+    <p class="hint">AI image generation requires an API key and may incur usage costs. Do not enter private information.</p>
+   </form>
+  </div>
+  <div class="card">
+   <h3>Your AI result</h3>
+   <div id="emptyResult"><p class="muted">Your generated design will appear here.</p><img class="gallery-img" src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=85" alt="Abstract colorful design inspiration"></div>
+   <img id="aiResult" class="preview" alt="AI-generated design" style="display:none">
+   <div class="actions"><button class="btn secondary" id="downloadBtn" disabled>Download image</button><button class="btn green" id="useDesignBtn" disabled>Use in order</button></div>
+  </div>
+ </div>
+ <div class="notice" style="margin-top:16px">Print note: AI-generated artwork is a concept. Check spelling, Tamil letters, faces, logos, dimensions and print quality before printing. For large flex banners, your shop may need to prepare a high-resolution, print-ready file separately.</div>
+</section>
+
+<section id="upload" class="page">
+ <div class="eyebrow">Your artwork</div>
+ <h1>Upload Your <span>Design</span></h1>
+ <p>Tap the upload area below to open your phone's photo gallery or file picker. Choose your banner design, photo, JPG, PNG or PDF, then continue with your order.</p>
+ <div class="grid two">
+  <div class="card">
+   <h2>Select from your gallery</h2>
+   <label for="galleryUpload" class="btn" style="text-align:center;display:block">📁 Choose Design from Gallery</label>
+   <input id="galleryUpload" type="file" accept="image/*,.pdf" style="position:absolute;left:-9999px;width:1px;height:1px" aria-label="Choose a design from your gallery">
+   <p class="hint">On a phone, tapping the button opens your photo gallery or file picker. On a computer, it opens your file chooser.</p>
+   <div id="galleryUploadInfo" class="hint">No design selected yet.</div>
+   <button id="sendUploadedToOrder" class="btn green" disabled>Continue to Order</button>
+  </div>
+  <div class="card">
+   <h2>Design preview</h2>
+   <p class="muted">Your selected image will appear here before you continue.</p>
+   <img id="galleryUploadPreview" class="preview" alt="Selected design preview" style="display:none">
+   <div id="galleryUploadEmpty"><img class="gallery-img" src="https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=900&q=85" alt="Graphic design inspiration"></div>
+  </div>
+ </div>
+ <div class="notice" style="margin-top:16px">Your design is only selected in this browser preview. To send it to the shop, attach the file in WhatsApp after the order message opens. This demo does not upload or store the file online.</div>
+</section>
+
+<section id="custom" class="page">
+ <div class="eyebrow">Your creativity, your rules</div><h1>Custom <span>Design Maker 🎨</span></h1>
+ <p>Build a simple custom layout with your own wording, colors and dimensions. Preview it, download an SVG artwork file, then send the design request to Bala Graphics.</p>
+ <div class="grid two">
+  <div class="card"><form id="customForm">
+   <label for="customTitle">Main heading *</label><input id="customTitle" maxlength="90" required value="YOUR DESIGN TITLE" placeholder="Enter your title">
+   <label for="customSubtitle">Subtitle / details</label><textarea id="customSubtitle" maxlength="250" placeholder="Phone number, offer, event details...">Your message goes here</textarea>
+   <div class="form-grid"><div><label for="customWidth">Width</label><input id="customWidth" type="number" min="1" value="8" required></div><div><label for="customHeight">Height</label><input id="customHeight" type="number" min="1" value="4" required></div></div>
+   <label for="customUnit">Measurement unit</label><select id="customUnit"><option>Feet</option><option>Inches</option><option>Centimeters</option></select>
+   <div class="form-grid"><div><label for="customBg">Background color</label><input id="customBg" type="color" value="#25105c" style="height:48px;padding:5px"></div><div><label for="customAccent">Accent color</label><input id="customAccent" type="color" value="#ff4fb8" style="height:48px;padding:5px"></div></div>
+   <label for="customStyle">Design style</label><select id="customStyle"><option value="modern">Modern gradient</option><option value="celebration">Celebration</option><option value="business">Business clean</option><option value="cinematic">Cinematic</option></select>
+   <button class="btn" type="submit">Update Preview</button>
+  </form></div>
+  <div class="card"><h3>Live design preview</h3><div id="customPreview" style="background:#25105c;border-radius:12px;min-height:230px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:18px;text-align:center"><div><h2 style="font-size:clamp(24px,4vw,42px);margin:0;color:#ff4fb8">YOUR DESIGN TITLE</h2><p>Your message goes here</p></div></div>
+   <div class="actions"><button class="btn secondary" id="downloadCustom">Download SVG</button><button class="btn green" id="sendCustom">Send design request to owner</button></div>
+   <p class="hint">WhatsApp opens with your design details. To share the downloaded artwork, attach the SVG file in that chat. This demo does not upload files automatically.</p><div id="customStatus" class="status"></div>
+  </div>
+ </div>
+</section>
+
+<section id="helper" class="page">
+ <div class="eyebrow">Your design assistant</div><h1>Helping <span>AI 🤖</span></h1><p>Ask for practical guidance on design ideas, sizes, colors, Tamil wording, file types and printing preparation.</p>
+ <div class="grid two"><div class="card"><h3>Ask a question</h3><form id="helperForm"><label for="helperQuestion">How can I help you?</label><textarea id="helperQuestion" required maxlength="700" placeholder="Example: I need an 8 x 4 feet shop board in Tamil with a cyan background."></textarea><button class="btn" type="submit">Get Design Help</button></form><div class="actions"><button class="btn secondary helperQuick" data-q="Suggest a colorful 8 x 4 feet shop board layout.">Shop board idea</button><button class="btn secondary helperQuick" data-q="How do I prepare a high-quality flex banner for printing?">Print quality</button><button class="btn secondary helperQuick" data-q="Help me arrange Tamil text clearly on a banner.">Tamil text</button></div></div>
+ <div class="card"><h3>Assistant response</h3><div id="helperAnswer" aria-live="polite" style="white-space:pre-wrap;line-height:1.7;color:#f5f3ff">Vanakkam! Tell me what you want to design. I can help with ideas, layout, colors and print checklist.</div><p class="hint">This built-in helper gives instant design guidance locally. For live AI answers, connect an AI API on the server.</p></div></div>
+</section>
+
+<section id="gallery" class="page">
+ <div class="eyebrow">Ideas and inspiration</div><h1>Design <span>Gallery</span></h1><p>Explore styles and start an order. These are inspiration images; replace them with your actual shop designs and portfolio before publishing.</p>
+ <div class="grid">
+  <article class="card"><img class="gallery-img" src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=85" alt="Abstract colorful art"><h3>Colorful Modern</h3><button class="btn secondary" data-prompt="Colorful modern promotional banner with energetic abstract shapes">Use as inspiration</button></article>
+  <article class="card"><img class="gallery-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=85" alt="Gradient design"><h3>Gradient Style</h3><button class="btn secondary" data-prompt="Elegant gradient background banner with bold readable headline and clean composition">Use as inspiration</button></article>
+  <article class="card"><img class="gallery-img" src="https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=900&q=85" alt="Graphic design desk"><h3>Creative Branding</h3><button class="btn secondary" data-prompt="Professional shop branding and signage concept with clear typography">Use as inspiration</button></article>
+  <article class="card"><img class="gallery-img" src="https://images.unsplash.com/photo-1634942536790-253e4ccc4e2e?auto=format&fit=crop&w=900&q=85" alt="Party celebration"><h3>Celebration</h3><button class="btn secondary" data-prompt="Festive birthday celebration banner with balloons, confetti and joyful colors">Use as inspiration</button></article>
+  <article class="card"><img class="gallery-img" src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=900&q=85" alt="Branding design"><h3>Business Identity</h3><button class="btn secondary" data-prompt="Premium business identity banner with confident typography and a polished layout">Use as inspiration</button></article>
+  <article class="card"><img class="gallery-img" src="https://images.unsplash.com/photo-1589330694653-ded6df03f754?auto=format&fit=crop&w=900&q=85" alt="Printed stationery"><h3>Print Essentials</h3><button class="btn secondary" data-prompt="Coordinated visiting card and sticker label design for a small business">Use as inspiration</button></article>
+ </div>
+</section>
+
+<section id="order" class="page">
+ <div class="eyebrow">Customer order form</div><h1>Start your <span>print order</span></h1><p>Fill in the details. WhatsApp will open with your order summary. Send your artwork file separately in the WhatsApp chat.</p>
+ <div class="card">
+  <form id="orderForm" class="form-grid">
+   <div><label for="customerName">Your name *</label><input id="customerName" required placeholder="Full name"></div>
+   <div><label for="customerPhone">Your phone *</label><input id="customerPhone" type="tel" required placeholder="Phone number"></div>
+   <div class="full"><label for="service">Service *</label><select id="service" required><option value="">Select service</option><option>Flex Banner</option><option>Birthday Banner</option><option>Wedding Banner</option><option>Shop Board</option><option>Stickers & Labels</option><option>School Labels</option><option>Visiting Cards</option><option>Graphic Design</option><option>Other Printing Work</option></select></div>
+   <div><label for="width">Width</label><input id="width" type="number" min="0" step="any" placeholder="Width"></div>
+   <div><label for="height">Height</label><input id="height" type="number" min="0" step="any" placeholder="Height"></div>
+   <div><label for="unit">Unit</label><select id="unit"><option>Feet</option><option>Inches</option><option>Centimeters</option></select></div>
+   <div><label for="quantity">Quantity *</label><input id="quantity" type="number" min="1" value="1" required></div>
+   <div class="full"><label for="artwork">Upload design file (optional)</label><input id="artwork" type="file" accept=".jpg,.jpeg,.png,.pdf"><div id="uploadInfo" class="hint">File is checked in your browser; this demo does not store it online.</div></div>
+   <div class="full"><label for="notes">Notes / exact text</label><textarea id="notes" placeholder="Tamil text, colors, delivery questions, etc."></textarea></div>
+   <div class="full"><label for="collection">Collection</label><select id="collection"><option>Pickup from shop</option><option>Ask about delivery</option></select></div>
+   <div class="full"><button class="btn green" type="submit">Send Order on WhatsApp</button></div>
+  </form>
+  <p class="hint">Price is confirmed by Bala Graphics. Uploading a file here does not attach it to WhatsApp automatically.</p>
+ </div>
+</section>
+
+<section id="office" class="page">
+ <div class="eyebrow">Private office workspace</div><h1>Office <span>Manager</span></h1>
+ <p>Manage customer orders, job progress, invoices and payment balances. Data is saved by the app server and shared across devices that connect to this same server.</p>
+ <div class="grid" style="margin:18px 0">
+  <article class="card"><div class="muted">Total orders</div><h2 id="statOrders">0</h2></article>
+  <article class="card"><div class="muted">Total billed</div><h2 id="statBilled">₹0</h2></article>
+  <article class="card"><div class="muted">Outstanding balance</div><h2 id="statBalance">₹0</h2></article>
+ </div>
+ <div class="grid two">
+  <div class="card"><h2>Create office order</h2><form id="officeOrderForm">
+   <label for="officeCustomer">Customer name *</label><input id="officeCustomer" required maxlength="100" placeholder="Customer name">
+   <label for="officePhone">Phone number</label><input id="officePhone" type="tel" maxlength="25" placeholder="Customer phone">
+   <label for="officeService">Job / service *</label><input id="officeService" required maxlength="120" placeholder="Flex banner, shop board, sticker...">
+   <div class="form-grid"><div><label for="officeWidth">Width</label><input id="officeWidth" type="number" min="0" step="any" placeholder="8"></div><div><label for="officeHeight">Height</label><input id="officeHeight" type="number" min="0" step="any" placeholder="4"></div></div>
+   <div class="form-grid"><div><label for="officeUnit">Unit</label><select id="officeUnit"><option>Feet</option><option>Inches</option><option>Centimeters</option></select></div><div><label for="officeQty">Quantity</label><input id="officeQty" type="number" min="1" value="1" required></div></div>
+   <div class="form-grid"><div><label for="officePrice">Total price (₹)</label><input id="officePrice" type="number" min="0" step="0.01" value="0" required></div><div><label for="officeAdvance">Advance received (₹)</label><input id="officeAdvance" type="number" min="0" step="0.01" value="0" required></div></div>
+   <label for="officeDue">Expected delivery date</label><input id="officeDue" type="date">
+   <label for="officeNotes">Notes / exact Tamil or English text</label><textarea id="officeNotes" maxlength="1500" placeholder="Design details, customer instructions..."></textarea>
+   <button class="btn" type="submit">Save order</button><div id="officeFormStatus" class="status" role="status"></div>
+  </form></div>
+  <div class="card"><h2>Record a payment</h2><form id="paymentForm">
+   <label for="paymentOrder">Select order *</label><select id="paymentOrder" required><option value="">Choose order</option></select>
+   <label for="paymentAmount">Payment amount (₹) *</label><input id="paymentAmount" type="number" min="0.01" step="0.01" required>
+   <label for="paymentMethod">Payment method</label><select id="paymentMethod"><option>Cash</option><option>UPI</option><option>Bank transfer</option><option>Card</option><option>Other</option></select>
+   <label for="paymentNote">Payment note</label><input id="paymentNote" maxlength="150" placeholder="Optional reference">
+   <button class="btn green" type="submit">Record payment</button><div id="paymentStatus" class="status" role="status"></div>
+  </form>
+  <div class="notice" style="margin-top:18px">Tip: use the order list below to update job status. Print a customer invoice from the order row. Please back up the data folder regularly.</div></div>
+ </div>
+ <div class="section-head"><div><div class="eyebrow">Work queue</div><h2>Customer orders & tracking</h2></div><button class="btn secondary" id="refreshOrders">Refresh</button></div>
+ <div class="card" style="overflow-x:auto"><div id="ordersMessage" class="status">Loading orders…</div><table id="ordersTable" style="width:100%;border-collapse:collapse;min-width:850px;text-align:left"><thead><tr><th style="padding:10px">Order / Customer</th><th style="padding:10px">Job</th><th style="padding:10px">Price</th><th style="padding:10px">Paid / Due</th><th style="padding:10px">Status</th><th style="padding:10px">Actions</th></tr></thead><tbody id="ordersBody"></tbody></table></div>
+ <div class="actions"><button class="btn secondary" id="exportOrders">Export orders CSV</button><button class="btn secondary" id="backupData">Download data backup</button><button class="btn secondary" id="restoreDataBtn">Restore backup</button><input id="restoreDataFile" type="file" accept="application/json" hidden></div>
+</section>
+
+<section id="contact" class="page">
+ <div class="eyebrow">Let's make something great</div><h1>Contact <span>Bala Graphics</span></h1>
+ <div class="grid two">
+  <div class="card"><h2>Talk to our team</h2><p>Call us about pricing, dimensions, print materials, file setup and order status.</p><h3>9944307171</h3><div class="actions"><a class="btn" href="tel:+919944307171">Call Now</a><a class="btn green" target="_blank" rel="noopener" href="https://wa.me/919944307171?text=Hello%20Bala%20Graphics%2C%20I%20have%20a%20printing%20enquiry.">WhatsApp Us</a></div></div>
+  <div class="card"><h2>Before you order</h2><ul><li>Confirm final dimensions and material.</li><li>Double-check Tamil and English spelling.</li><li>Ask the shop about price and turnaround time.</li><li>Send original high-resolution artwork if available.</li></ul><button class="btn secondary" data-go="order">Open order form</button></div>
+ </div>
+</section>
+</main>
+<footer><strong>BALA GRAPHICS</strong><p>Flex Banners • Stickers • Labels • Shop Boards • Printing</p><p>Call / WhatsApp: 9944307171</p><small>AI results are design concepts and should be proofread before printing.</small></footer>
+
+<script>
+const dashboardPrompt=document.getElementById('dashboardPrompt');
+document.getElementById('dashboardGenerate')?.addEventListener('click',()=>{
+ const p=(dashboardPrompt?.value||'').trim();
+ if(p){document.getElementById('aiPrompt').value=p;}
+ showPage('studio');
+ if(p){document.getElementById('aiPrompt').focus();}
+});
+document.querySelectorAll('.category-tile').forEach(b=>b.addEventListener('click',()=>{
+ showPage('order');
+ const service=document.getElementById('service');
+ if(service) service.value=b.dataset.service||'';
+}));
+document.getElementById('globalSearch')?.addEventListener('keydown',e=>{
+ if(e.key==='Enter'){
+  const q=e.target.value.trim().toLowerCase();
+  if(!q)return;
+  const category=[...document.querySelectorAll('.category-tile')].find(x=>x.innerText.toLowerCase().includes(q));
+  if(category){category.click();return;}
+  if(/ai|design|prompt/.test(q))showPage('studio');
+  else if(/order|invoice|payment|customer/.test(q))showPage('office');
+  else if(/template|gallery|poster|banner|label|sticker|card/.test(q))showPage('gallery');
+  else if(/custom|size|inch|feet|cm/.test(q))showPage('custom');
+  else showPage('services');
+ }
+});
+const pages = [...document.querySelectorAll(".page")];
+function showPage(id){
+  pages.forEach(p=>p.classList.toggle("active",p.id===id));
+  document.querySelectorAll("nav button[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.go)));
+document.querySelectorAll("[data-service]").forEach(b=>b.addEventListener("click",()=>{
+  showPage("order");document.getElementById("service").value=b.dataset.service;
+}));
+document.querySelectorAll("[data-prompt]").forEach(b=>b.addEventListener("click",()=>{
+  document.getElementById("aiPrompt").value=b.dataset.prompt;showPage("studio");
+}));
+
+let currentImage = "";
+document.getElementById("aiForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const btn=document.getElementById("generateBtn");
+  const status=document.getElementById("aiStatus");
+  btn.disabled=true;btn.textContent="Generating…";status.textContent="Creating your design. This may take a little while.";
+  try{
+    const response=await fetch("/api/generate-design",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        prompt:document.getElementById("aiPrompt").value.trim(),
+        designType:document.getElementById("designType").value,
+        style:document.getElementById("aiStyle").value,
+        text:document.getElementById("exactText").value.trim(),
+        size:document.getElementById("aiSize").value
+      })
+    });
+    const data=await response.json();
+    if(!response.ok) throw new Error(data.error||"Generation failed.");
+    currentImage=data.image;
+    document.getElementById("aiResult").src=currentImage;
+    document.getElementById("aiResult").style.display="block";
+    document.getElementById("emptyResult").style.display="none";
+    document.getElementById("downloadBtn").disabled=false;
+    document.getElementById("useDesignBtn").disabled=false;
+    status.textContent="Design generated. Review the artwork carefully before printing.";
+  }catch(err){status.textContent=err.message+" You can still describe your idea to the shop through WhatsApp.";}
+  finally{btn.disabled=false;btn.textContent="Generate AI Design";}
+});
+document.getElementById("downloadBtn").addEventListener("click",()=>{
+  if(!currentImage)return;
+  const a=document.createElement("a");a.href=currentImage;a.download="Bala-Graphics-AI-Design.png";a.click();
+});
+document.getElementById("useDesignBtn").addEventListener("click",()=>{
+  document.getElementById("notes").value="AI design created in app. I will attach the generated design in WhatsApp.";
+  showPage("order");
+});
+
+const artwork=document.getElementById("artwork");
+artwork.addEventListener("change",()=>{
+  const f=artwork.files[0];const info=document.getElementById("uploadInfo");
+  if(!f){info.textContent="No file selected.";return;}
+  const ok=["image/jpeg","image/png","application/pdf"].includes(f.type);
+  if(!ok || f.size>10*1024*1024){alert("Choose a JPG, PNG, or PDF file under 10 MB.");artwork.value="";info.textContent="No valid file selected.";return;}
+  info.textContent="Selected: "+f.name+" ("+(f.size/1024/1024).toFixed(2)+" MB). This file is not automatically uploaded.";
+});
+let chosenGalleryFile = null;
+let galleryPreviewUrl = null;
+const galleryUpload = document.getElementById("galleryUpload");
+galleryUpload.addEventListener("change", () => {
+  const file = galleryUpload.files && galleryUpload.files[0];
+  const info = document.getElementById("galleryUploadInfo");
+  const preview = document.getElementById("galleryUploadPreview");
+  const empty = document.getElementById("galleryUploadEmpty");
+  const continueBtn = document.getElementById("sendUploadedToOrder");
+  if (!file) return;
+  const allowed = ["image/jpeg", "image/png", "image/webp", "image/gif", "application/pdf"];
+  if (!allowed.includes(file.type) || file.size > 10 * 1024 * 1024) {
+    alert("Please choose an image or PDF file smaller than 10 MB.");
+    galleryUpload.value = "";
+    chosenGalleryFile = null;
+    continueBtn.disabled = true;
+    info.textContent = "No valid design selected.";
+    preview.style.display = "none";
+    empty.style.display = "block";
+    return;
+  }
+  chosenGalleryFile = file;
+  info.textContent = "Selected: " + file.name + " (" + (file.size / 1024 / 1024).toFixed(2) + " MB)";
+  continueBtn.disabled = false;
+  if (galleryPreviewUrl) URL.revokeObjectURL(galleryPreviewUrl);
+  if (file.type.startsWith("image/")) {
+    galleryPreviewUrl = URL.createObjectURL(file);
+    preview.src = galleryPreviewUrl;
+    preview.style.display = "block";
+    empty.style.display = "none";
+  } else {
+    preview.style.display = "none";
+    empty.style.display = "block";
+    empty.innerHTML = "<p class='muted'>PDF selected. It will be listed with your order details; preview is not available in this demo.</p>";
+  }
+});
+document.getElementById("sendUploadedToOrder").addEventListener("click", () => {
+  if (!chosenGalleryFile) return;
+  showPage("order");
+  document.getElementById("notes").value =
+    "I selected my design file: " + chosenGalleryFile.name +
+    ". I will attach this file in the WhatsApp chat.";
+  document.getElementById("uploadInfo").textContent =
+    "Selected in Upload Design page: " + chosenGalleryFile.name +
+    ". Please select the file here too if you want it listed on this form.";
+});
+
+document.getElementById("orderForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const val=id=>document.getElementById(id).value.trim();
+  const file=document.getElementById("artwork").files[0];
+  const payload={customer:val("customerName"),phone:val("customerPhone"),service:val("service"),width:val("width"),height:val("height"),unit:val("unit"),quantity:Number(val("quantity")||1),price:0,advance:0,dueDate:"",notes:val("notes")+(file?"\nSelected file: "+file.name:""),collection:val("collection")};
+  try{
+    const r=await fetch('/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const d=await r.json(); if(!r.ok) throw new Error(d.error||'Could not save order');
+    const message=["Hello Bala Graphics! I have submitted an order request.","Order ID: "+d.order.id,"Name: "+payload.customer,"Phone: "+payload.phone,"Service: "+payload.service,"Size: "+(payload.width||"Not specified")+" x "+(payload.height||"Not specified")+" "+payload.unit,"Quantity: "+payload.quantity,"Notes: "+(payload.notes||"None"),file?"Selected file: "+file.name+" (I will attach it separately).":"No file selected.","Please confirm price and delivery time."].join("\n");
+    window.open("https://wa.me/919944307171?text="+encodeURIComponent(message),"_blank","noopener");
+    alert('Order request saved. Reference: '+d.order.id+'\nThe WhatsApp message will open next.');
+  }catch(err){alert('Could not save order to the office server: '+err.message+'\nMake sure the app is running using start.bat / start.sh.');}
+});
+
+
+// Custom design maker: updates preview and exports a simple SVG file.
+const customFields = ["customTitle","customSubtitle","customWidth","customHeight","customUnit","customBg","customAccent","customStyle"];
+function escapeXml(value){return String(value).replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function customSvg(){
+ const title=document.getElementById("customTitle").value.trim()||"YOUR DESIGN TITLE";
+ const subtitle=document.getElementById("customSubtitle").value.trim();
+ const bg=document.getElementById("customBg").value, accent=document.getElementById("customAccent").value;
+ const style=document.getElementById("customStyle").value; const w=1200,h=600;
+ const decoration=style==="celebration"?'<circle cx="100" cy="100" r="55" fill="'+accent+'" opacity=".5"/><circle cx="1080" cy="490" r="95" fill="'+accent+'" opacity=".35"/>':style==="cinematic"?'<path d="M0 500 L1200 100 L1200 600 L0 600Z" fill="'+accent+'" opacity=".2"/>':style==="business"?'<rect x="45" y="45" width="1110" height="510" rx="12" fill="none" stroke="'+accent+'" stroke-width="8"/>':'<circle cx="1050" cy="80" r="170" fill="'+accent+'" opacity=".18"/><circle cx="100" cy="570" r="190" fill="'+accent+'" opacity=".18"/>';
+ return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="1200" height="600" fill="${bg}"/>${decoration}<text x="600" y="265" text-anchor="middle" font-family="Arial,sans-serif" font-size="64" font-weight="800" fill="${accent}">${escapeXml(title)}</text><text x="600" y="345" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" fill="#ffffff">${escapeXml(subtitle)}</text><text x="600" y="535" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#ffffff" opacity=".75">BALA GRAPHICS • CUSTOM DESIGN CONCEPT</text></svg>`;
+}
+function updateCustomPreview(){const title=document.getElementById("customTitle").value||"YOUR DESIGN TITLE", sub=document.getElementById("customSubtitle").value, bg=document.getElementById("customBg").value, accent=document.getElementById("customAccent").value, style=document.getElementById("customStyle").value;const box=document.getElementById("customPreview");box.style.background=style==="modern"?`linear-gradient(135deg,${bg},${accent}88)`:bg;box.innerHTML=`<div style="width:100%;padding:22px;border:${style==='business'?'4px solid '+accent:'0'};background:${style==='cinematic'?'linear-gradient(120deg,#0008,transparent)':'transparent'}"><h2 style="font-size:clamp(22px,4vw,42px);margin:0;color:${accent};overflow-wrap:anywhere">${escapeXml(title)}</h2><p style="color:#fff;white-space:pre-wrap;overflow-wrap:anywhere">${escapeXml(sub)}</p><small style="color:#fff9;letter-spacing:2px">BALA GRAPHICS</small></div>`;}
+document.getElementById("customForm").addEventListener("submit",e=>{e.preventDefault();updateCustomPreview();document.getElementById("customStatus").textContent="Preview updated. Download the SVG or send your request to the owner.";});
+customFields.forEach(id=>document.getElementById(id).addEventListener("input",updateCustomPreview));
+document.getElementById("downloadCustom").addEventListener("click",()=>{const blob=new Blob([customSvg()],{type:"image/svg+xml;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="bala-graphics-custom-design.svg";a.click();URL.revokeObjectURL(url);document.getElementById("customStatus").textContent="SVG download started. Open it in a compatible design app for further editing.";});
+document.getElementById("sendCustom").addEventListener("click",()=>{const v=id=>document.getElementById(id).value;const msg=["Hello Bala Graphics! I want to request a custom design.","Heading: "+v("customTitle"),"Details: "+v("customSubtitle"),"Size: "+v("customWidth")+" x "+v("customHeight")+" "+v("customUnit"),"Background: "+v("customBg"),"Accent: "+v("customAccent"),"Style: "+v("customStyle"),"I will attach the downloaded SVG/reference artwork in this WhatsApp chat. Please confirm price and print-ready setup."].join("\n");window.open("https://wa.me/919944307171?text="+encodeURIComponent(msg),"_blank","noopener");});
+// Built-in helping assistant offers useful local answers without pretending a live AI service is connected.
+function answerHelper(q){const t=q.toLowerCase();if(/size|feet|inch|dimension/.test(t))return "Start with the exact finished size (for example, 8 × 4 feet). Keep important text away from the edges and confirm the final dimensions with the printer before exporting.";if(/tamil|தமிழ்|spelling|text/.test(t))return "Use a clear Tamil font, keep enough contrast between text and background, and proofread every Tamil letter before printing. If the text must be exact, paste the final wording into the design brief.";if(/quality|print|resolution|dpi|png|pdf/.test(t))return "For large flex work, ask the shop for its preferred scale, resolution and file format. Use high-resolution images, keep logos sharp, and request a final proof before printing. PDF is often useful for print handoff; PNG can work for raster artwork.";if(/color|colour|background|palette/.test(t))return "Try a 2–3 color palette: one background, one accent, and a high-contrast text color. For example, navy + cyan + white for modern work, or maroon + gold + cream for a traditional look.";if(/price|cost|rate|payment/.test(t))return "The price depends on size, material, finishing and quantity. Send the exact width, height, quantity and design file to Bala Graphics on WhatsApp for a quote.";if(/logo|shop board|banner|flex|birthday|wedding|poster/.test(t))return "Suggested layout: place the main name or headline first, keep the supporting details grouped beneath it, use one strong focal image, and leave clear space around the edges. Choose a style and colors in Custom Design, then send the request to the owner.";return "I can help with layout, colors, Tamil text, sizes and print preparation. Include the design type, finished size, wording, preferred colors and where it will be displayed. For final pricing or print approval, contact Bala Graphics.";}
+document.getElementById("helperForm").addEventListener("submit",e=>{e.preventDefault();const q=document.getElementById("helperQuestion").value.trim();document.getElementById("helperAnswer").textContent=answerHelper(q);});
+document.querySelectorAll(".helperQuick").forEach(b=>b.addEventListener("click",()=>{const q=b.dataset.q;document.getElementById("helperQuestion").value=q;document.getElementById("helperAnswer").textContent=answerHelper(q);}));
+updateCustomPreview();
+
+// Installable PWA support. Installation is available after the app is hosted on HTTPS.
+let deferredInstallPrompt = null;
+const installAppBtn = document.getElementById("installAppBtn");
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  if (installAppBtn) installAppBtn.hidden = false;
+});
+if (installAppBtn) installAppBtn.addEventListener("click", async () => {
+  if (!deferredInstallPrompt) {
+    alert("To install: open this site in Chrome or Edge and choose Install app / Add to Home Screen from the browser menu.");
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  installAppBtn.hidden = true;
+});
+window.addEventListener("appinstalled", () => { if (installAppBtn) installAppBtn.hidden = true; });
+if ("serviceWorker" in navigator && location.protocol !== "file:") {
+  window.addEventListener("load", () => navigator.serviceWorker.register("/service-worker.js").catch(err => console.warn("Offline support unavailable", err)));
+}
+
+
+// Office manager: server-backed order, status, invoice and payment workflows.
+const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let officeOrders=[];
+async function api(path,opts={}){const r=await fetch(path,{headers:{'Content-Type':'application/json',...(opts.headers||{})},...opts});const d=await r.json().catch(()=>({error:'Unexpected server response'}));if(!r.ok)throw new Error(d.error||'Request failed');return d;}
+async function loadOfficeOrders(){
+ const msg=document.getElementById('ordersMessage');if(!msg)return;msg.textContent='Loading orders…';
+ try{const d=await api('/api/orders');officeOrders=d.orders||[];renderOfficeOrders();msg.textContent=officeOrders.length?officeOrders.length+' order(s) saved.':'No orders yet. Create the first order using the form above.';}
+ catch(e){msg.textContent='Office server is not connected. Start the app using start.bat (Windows) or start.sh (Mac/Linux). '+e.message;}
+}
+function renderOfficeOrders(){
+ const body=document.getElementById('ordersBody');if(!body)return;
+ const total=officeOrders.reduce((a,o)=>a+Number(o.price||0),0),balance=officeOrders.reduce((a,o)=>a+Math.max(0,Number(o.price||0)-Number(o.paid||0)),0);
+ document.getElementById('statOrders').textContent=officeOrders.length;document.getElementById('statBilled').textContent=money(total);document.getElementById('statBalance').textContent=money(balance);
+ body.innerHTML=officeOrders.map(o=>`<tr style="border-top:1px solid var(--line)"><td style="padding:10px"><strong>${esc(o.id)}</strong><br>${esc(o.customer)}<br><small>${esc(o.phone||'')}</small></td><td style="padding:10px">${esc(o.service)}<br><small>${esc(o.width||'—')} × ${esc(o.height||'—')} ${esc(o.unit||'')}</small><br><small>Qty: ${esc(o.quantity||1)} · Due: ${esc(o.dueDate||'—')}</small></td><td style="padding:10px">${money(o.price)}</td><td style="padding:10px">${money(o.paid)}<br><strong>Due ${money(Math.max(0,Number(o.price||0)-Number(o.paid||0)))}</strong></td><td style="padding:10px"><select aria-label="Status for ${esc(o.id)}" data-status-id="${esc(o.id)}">${['New','Designing','Waiting for approval','Approved','Printing','Ready for pickup','Delivered','Cancelled'].map(x=>`<option ${o.status===x?'selected':''}>${x}</option>`).join('')}</select></td><td style="padding:10px"><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn secondary" data-invoice="${esc(o.id)}" type="button">Invoice</button><button class="btn secondary" data-whatsapp="${esc(o.id)}" type="button">WhatsApp</button></div></td></tr>`).join('');
+ const select=document.getElementById('paymentOrder');const previous=select.value;select.innerHTML='<option value="">Choose order</option>'+officeOrders.filter(o=>Number(o.price||0)>Number(o.paid||0)).map(o=>`<option value="${esc(o.id)}">${esc(o.id)} — ${esc(o.customer)} (due ${money(Number(o.price||0)-Number(o.paid||0))})</option>`).join('');if(previous)select.value=previous;
+}
+document.getElementById('officeOrderForm')?.addEventListener('submit',async e=>{e.preventDefault();const val=id=>document.getElementById(id).value;const payload={customer:val('officeCustomer').trim(),phone:val('officePhone').trim(),service:val('officeService').trim(),width:val('officeWidth'),height:val('officeHeight'),unit:val('officeUnit'),quantity:Number(val('officeQty')),price:Number(val('officePrice')),advance:Number(val('officeAdvance')),dueDate:val('officeDue'),notes:val('officeNotes').trim()};const status=document.getElementById('officeFormStatus');try{const d=await api('/api/orders',{method:'POST',body:JSON.stringify(payload)});status.textContent='Saved order '+d.order.id; e.target.reset();document.getElementById('officeQty').value=1;document.getElementById('officePrice').value=0;document.getElementById('officeAdvance').value=0;await loadOfficeOrders();}catch(err){status.textContent=err.message;}});
+document.getElementById('paymentForm')?.addEventListener('submit',async e=>{e.preventDefault();const status=document.getElementById('paymentStatus');try{const id=document.getElementById('paymentOrder').value;const amount=Number(document.getElementById('paymentAmount').value);const method=document.getElementById('paymentMethod').value;const note=document.getElementById('paymentNote').value;await api('/api/orders/'+encodeURIComponent(id)+'/payments',{method:'POST',body:JSON.stringify({amount,method,note})});status.textContent='Payment recorded successfully.';e.target.reset();await loadOfficeOrders();}catch(err){status.textContent=err.message;}});
+document.getElementById('ordersBody')?.addEventListener('change',async e=>{if(!e.target.matches('[data-status-id]'))return;try{await api('/api/orders/'+encodeURIComponent(e.target.dataset.statusId),{method:'PATCH',body:JSON.stringify({status:e.target.value})});await loadOfficeOrders();}catch(err){alert(err.message);loadOfficeOrders();}});
+document.getElementById('ordersBody')?.addEventListener('click',e=>{const inv=e.target.closest('[data-invoice]');const wa=e.target.closest('[data-whatsapp]');if(inv){const o=officeOrders.find(x=>x.id===inv.dataset.invoice);if(o)printInvoice(o);}if(wa){const o=officeOrders.find(x=>x.id===wa.dataset.whatsapp);if(o){const msg=`Hello ${o.customer}, update from Bala Graphics.\nOrder: ${o.id}\nJob: ${o.service}\nStatus: ${o.status}\nTotal: ${money(o.price)}\nPaid: ${money(o.paid)}\nBalance: ${money(Math.max(0,o.price-o.paid))}`;window.open('https://wa.me/'+String(o.phone||'').replace(/\D/g,'').replace(/^0/,'91')+'?text='+encodeURIComponent(msg),'_blank','noopener');}}});
+function printInvoice(o){const w=window.open('','_blank','width=760,height=850');if(!w){alert('Allow pop-ups to print an invoice.');return;}const rows=(o.payments||[]).map(p=>`<tr><td>${esc(new Date(p.date).toLocaleString())}</td><td>${esc(p.method)}</td><td>${money(p.amount)}</td></tr>`).join('');w.document.write(`<!doctype html><html><head><title>Invoice ${esc(o.id)}</title><meta name="viewport" content="width=device-width"><style>body{font:15px Arial;margin:36px;color:#222}header{display:flex;justify-content:space-between;border-bottom:2px solid #222;padding-bottom:14px}table{width:100%;border-collapse:collapse;margin:22px 0}td,th{border:1px solid #ddd;padding:9px;text-align:left}.total{text-align:right;line-height:2}.muted{color:#555}@media print{button{display:none}}</style></head><body><header><div><h1>BALA GRAPHICS</h1><p>Flex Banners • Stickers • Shop Boards • Printing</p><p>Phone / WhatsApp: 9944307171</p></div><div><h2>INVOICE</h2><b>${esc(o.id)}</b><p>${esc(new Date(o.createdAt).toLocaleDateString())}</p></div></header><h3>Bill To</h3><p>${esc(o.customer)}<br>${esc(o.phone||'')}</p><table><thead><tr><th>Service / details</th><th>Quantity</th><th>Amount</th></tr></thead><tbody><tr><td>${esc(o.service)}<br><small>${esc(o.width||'—')} × ${esc(o.height||'—')} ${esc(o.unit||'')}</small><p>${esc(o.notes||'')}</p></td><td>${esc(o.quantity||1)}</td><td>${money(o.price)}</td></tr></tbody></table><div class="total"><div>Total: <b>${money(o.price)}</b></div><div>Paid: <b>${money(o.paid)}</b></div><div>Balance: <b>${money(Math.max(0,o.price-o.paid))}</b></div></div><h3>Payment history</h3><table><thead><tr><th>Date</th><th>Method</th><th>Amount</th></tr></thead><tbody>${rows||'<tr><td colspan="3">No payments recorded</td></tr>'}</tbody></table><p class="muted">Thank you for choosing Bala Graphics. Please check all spelling and design details before print approval.</p><button onclick="window.print()">Print / Save as PDF</button></body></html>`);w.document.close();}
+document.getElementById('refreshOrders')?.addEventListener('click',loadOfficeOrders);
+document.getElementById('exportOrders')?.addEventListener('click',()=>{const cols=['id','createdAt','customer','phone','service','width','height','unit','quantity','price','paid','status','dueDate','notes'];const csv=[cols.join(','),...officeOrders.map(o=>cols.map(k=>'"'+String(o[k]??'').replace(/"/g,'""')+'"').join(','))].join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='bala-graphics-orders.csv';a.click();URL.revokeObjectURL(a.href);});
+document.getElementById('backupData')?.addEventListener('click',async()=>{try{const d=await api('/api/backup');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));a.download='bala-graphics-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href);}catch(e){alert(e.message);}});
+document.getElementById('restoreDataBtn')?.addEventListener('click',()=>document.getElementById('restoreDataFile').click());
+document.getElementById('restoreDataFile')?.addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;if(!confirm('Restore this backup? It will replace the current order records.'))return;try{const data=JSON.parse(await f.text());await api('/api/backup',{method:'POST',body:JSON.stringify(data)});await loadOfficeOrders();alert('Backup restored.');}catch(err){alert('Restore failed: '+err.message);}e.target.value='';});
+const originalShowPage=showPage;showPage=function(id){originalShowPage(id);if(id==='office')loadOfficeOrders();};
+
+</script>
+</body>
+</html>
