@@ -1,0 +1,10 @@
+{
+  "name": "Bala Graphics Office App",
+  "short_name": "Bala Office",
+  "description": "Bala Graphics order tracking, billing and AI design studio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#101026",
+  "theme_color": "#171333",
+  "icons": []
+}

@@ -1,0 +1,8 @@
+{
+  "name": "bala-graphics-office-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bala Graphics responsive office order, billing and AI design app",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" }
+}
