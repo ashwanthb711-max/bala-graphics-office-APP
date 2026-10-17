@@ -559,17 +559,47 @@ document.getElementById("sendUploadedToOrder").addEventListener("click", () => {
     ". Please select the file here too if you want it listed on this form.";
 });
 
-document.getElementById("orderForm").addEventListener("submit",async e=>{
+
+document.getElementById("orderForm").addEventListener("submit", function(e) {
   e.preventDefault();
-  const val=id=>document.getElementById(id).value.trim();
-  const file=document.getElementById("artwork").files[0];
-  const payload={customer:val("customerName"),phone:val("customerPhone"),service:val("service"),width:val("width"),height:val("height"),unit:val("unit"),quantity:Number(val("quantity")||1),price:0,advance:0,dueDate:"",notes:val("notes")+(file?"\nSelected file: "+file.name:""),collection:val("collection")};
-  try{
-    const r=await fetch('/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    const d=await r.json(); if(!r.ok) throw new Error(d.error||'Could not save order');
-    const message=["Hello Bala Graphics! I have submitted an order request.","Order ID: "+d.order.id,"Name: "+payload.customer,"Phone: "+payload.phone,"Service: "+payload.service,"Size: "+(payload.width||"Not specified")+" x "+(payload.height||"Not specified")+" "+payload.unit,"Quantity: "+payload.quantity,"Notes: "+(payload.notes||"None"),file?"Selected file: "+file.name+" (I will attach it separately).":"No file selected.","Please confirm price and delivery time."].join("\n");
-    window.open("https://wa.me/919944307171?text="+encodeURIComponent(message),"_blank","noopener");
-    alert('Order request saved. Reference: '+d.order.id+'\nThe WhatsApp message will open next.');
+
+  const val = id => {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : "";
+  };
+
+  const fileInput = document.getElementById("artwork");
+  const file = fileInput && fileInput.files ? fileInput.files[0] : null;
+
+  const customer = val("customerName");
+  const phone = val("customerPhone");
+  const service = val("service");
+  const width = val("width");
+  const height = val("height");
+  const unit = val("unit");
+  const quantity = val("quantity") || "1";
+  const notes = val("notes");
+
+  const message =
+    "Hello Bala Graphics! I would like to place an order.\n\n" +
+    "Customer: " + customer + "\n" +
+    "Phone: " + phone + "\n" +
+    "Service: " + service + "\n" +
+    "Width: " + (width || "Not specified") + "\n" +
+    "Height: " + (height || "Not specified") + "\n" +
+    "Unit: " + (unit || "Not specified") + "\n" +
+    "Quantity: " + quantity + "\n" +
+    "Notes: " + (notes || "None") +
+    (file ? "\nSelected file: " + file.name +
+      " (please attach it manually in WhatsApp)" : "");
+
+  const whatsappUrl =
+    "https://wa.me/919944307171?text=" + encodeURIComponent(message);
+
+  window.open(whatsappUrl, "_blank");
+  alert("Your WhatsApp order message is ready. Please send it in WhatsApp.");
+});
+
   }catch(err){alert('Could not save order to the office server: '+err.message+'\nMake sure the app is running using start.bat / start.sh.');}
 });
 
